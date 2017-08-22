@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.java.cn.nanphonfy.mybatis.generator.mapper.TMemberMapper">
+  <resultMap id="BaseResultMap" type="main.java.cn.nanphonfy.mybatis.generator.entity.TMember">
+    <id column="memberId" jdbcType="INTEGER" property="memberid" />
+    <result column="accountNo" jdbcType="VARCHAR" property="accountno" />
+    <result column="accountSetupDate" jdbcType="TIMESTAMP" property="accountsetupdate" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="birthdate" jdbcType="TIMESTAMP" property="birthdate" />
+    <result column="checked" jdbcType="INTEGER" property="checked" />
+    <result column="degree" jdbcType="INTEGER" property="degree" />
+    <result column="emailAddress" jdbcType="VARCHAR" property="emailaddress" />
+    <result column="emergencyContact" jdbcType="VARCHAR" property="emergencycontact" />
+    <result column="emuDepartment" jdbcType="INTEGER" property="emudepartment" />
+    <result column="englishName" jdbcType="VARCHAR" property="englishname" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+    <result column="hobby" jdbcType="VARCHAR" property="hobby" />
+    <result column="interestLanguage" jdbcType="VARCHAR" property="interestlanguage" />
+    <result column="interestSubject" jdbcType="VARCHAR" property="interestsubject" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="postalCode" jdbcType="VARCHAR" property="postalcode" />
+    <result column="qqNumber" jdbcType="VARCHAR" property="qqnumber" />
+    <result column="rank" jdbcType="INTEGER" property="rank" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="sepecilSkill" jdbcType="VARCHAR" property="sepecilskill" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="deparmentPO_lessonID" jdbcType="INTEGER" property="deparmentpoLessonid" />
+    <result column="fk_esa_id" jdbcType="INTEGER" property="fkEsaId" />
+    <result column="regionPO_lessonID" jdbcType="INTEGER" property="regionpoLessonid" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="main.java.cn.nanphonfy.mybatis.generator.entity.TMemberWithBLOBs">
+    <result column="address" jdbcType="LONGVARCHAR" property="address" />
+    <result column="photo" jdbcType="LONGVARBINARY" property="photo" />
+    <result column="selfIntroduction" jdbcType="LONGVARCHAR" property="selfintroduction" />
+    <result column="teachingExperience" jdbcType="LONGVARCHAR" property="teachingexperience" />
+    <result column="teachingRecords" jdbcType="LONGVARCHAR" property="teachingrecords" />
+    <result column="workspace" jdbcType="LONGVARCHAR" property="workspace" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    memberId, accountNo, accountSetupDate, area, birthdate, checked, degree, emailAddress, 
+    emergencyContact, emuDepartment, englishName, gender, hobby, interestLanguage, interestSubject, 
+    job, major, name, password, phone, postalCode, qqNumber, rank, school, sepecilSkill, 
+    state, status, deparmentPO_lessonID, fk_esa_id, regionPO_lessonID, TYPE
+  </sql>
+  <sql id="Blob_Column_List">
+    address, photo, selfIntroduction, teachingExperience, teachingRecords, workspace
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="main.java.cn.nanphonfy.mybatis.generator.entity.TMemberExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="main.java.cn.nanphonfy.mybatis.generator.entity.TMemberExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_member
+    where memberId = #{memberid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_member
+    where memberId = #{memberid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="main.java.cn.nanphonfy.mybatis.generator.entity.TMemberExample">
+    delete from t_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="main.java.cn.nanphonfy.mybatis.generator.entity.TMemberWithBLOBs">
+    insert into t_member (memberId, accountNo, accountSetupDate, 
+      area, birthdate, checked, 
+      degree, emailAddress, emergencyContact, 
+      emuDepartment, englishName, gender, 
+      hobby, interestLanguage, interestSubject, 
+      job, major, name, password, 
+      phone, postalCode, qqNumber, 
+      rank, school, sepecilSkill, 
+      state, status, deparmentPO_lessonID, 
+      fk_esa_id, regionPO_lessonID, TYPE, 
+      address, photo, selfIntroduction, 
+      teachingExperience, teachingRecords, 
+      workspace)
+    values (#{memberid,jdbcType=INTEGER}, #{accountno,jdbcType=VARCHAR}, #{accountsetupdate,jdbcType=TIMESTAMP}, 
+      #{area,jdbcType=VARCHAR}, #{birthdate,jdbcType=TIMESTAMP}, #{checked,jdbcType=INTEGER}, 
+      #{degree,jdbcType=INTEGER}, #{emailaddress,jdbcType=VARCHAR}, #{emergencycontact,jdbcType=VARCHAR}, 
+      #{emudepartment,jdbcType=INTEGER}, #{englishname,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
+      #{hobby,jdbcType=VARCHAR}, #{interestlanguage,jdbcType=VARCHAR}, #{interestsubject,jdbcType=VARCHAR}, 
+      #{job,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{postalcode,jdbcType=VARCHAR}, #{qqnumber,jdbcType=VARCHAR}, 
+      #{rank,jdbcType=INTEGER}, #{school,jdbcType=VARCHAR}, #{sepecilskill,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{deparmentpoLessonid,jdbcType=INTEGER}, 
+      #{fkEsaId,jdbcType=INTEGER}, #{regionpoLessonid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{address,jdbcType=LONGVARCHAR}, #{photo,jdbcType=LONGVARBINARY}, #{selfintroduction,jdbcType=LONGVARCHAR}, 
+      #{teachingexperience,jdbcType=LONGVARCHAR}, #{teachingrecords,jdbcType=LONGVARCHAR}, 
+      #{workspace,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="main.java.cn.nanphonfy.mybatis.generator.entity.TMemberWithBLOBs">
+    insert into t_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberid != null">
+        memberId,
+      </if>
+      <if test="accountno != null">
+        accountNo,
+      </if>
+      <if test="accountsetupdate != null">
+        accountSetupDate,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="birthdate != null">
+        birthdate,
+      </if>
+      <if test="checked != null">
+        checked,
+      </if>
+      <if test="degree != null">
+        degree,
+      </if>
+      <if test="emailaddress != null">
+        emailAddress,
+      </if>
+      <if test="emergencycontact != null">
+        emergencyContact,
+      </if>
+      <if test="emudepartment != null">
+        emuDepartment,
+      </if>
+      <if test="englishname != null">
+        englishName,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="hobby != null">
+        hobby,
+      </if>
+      <if test="interestlanguage != null">
+        interestLanguage,
+      </if>
+      <if test="interestsubject != null">
+        interestSubject,
+      </if>
+      <if test="job != null">
+        job,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="postalcode != null">
+        postalCode,
+      </if>
+      <if test="qqnumber != null">
+        qqNumber,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+      <if test="school != null">
+        school,
+      </if>
+      <if test="sepecilskill != null">
+        sepecilSkill,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="deparmentpoLessonid != null">
+        deparmentPO_lessonID,
+      </if>
+      <if test="fkEsaId != null">
+        fk_esa_id,
+      </if>
+      <if test="regionpoLessonid != null">
+        regionPO_lessonID,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="photo != null">
+        photo,
+      </if>
+      <if test="selfintroduction != null">
+        selfIntroduction,
+      </if>
+      <if test="teachingexperience != null">
+        teachingExperience,
+      </if>
+      <if test="teachingrecords != null">
+        teachingRecords,
+      </if>
+      <if test="workspace != null">
+        workspace,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberid != null">
+        #{memberid,jdbcType=INTEGER},
+      </if>
+      <if test="accountno != null">
+        #{accountno,jdbcType=VARCHAR},
+      </if>
+      <if test="accountsetupdate != null">
+        #{accountsetupdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null">
+        #{birthdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checked != null">
+        #{checked,jdbcType=INTEGER},
+      </if>
+      <if test="degree != null">
+        #{degree,jdbcType=INTEGER},
+      </if>
+      <if test="emailaddress != null">
+        #{emailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencycontact != null">
+        #{emergencycontact,jdbcType=VARCHAR},
+      </if>
+      <if test="emudepartment != null">
+        #{emudepartment,jdbcType=INTEGER},
+      </if>
+      <if test="englishname != null">
+        #{englishname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="hobby != null">
+        #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="interestlanguage != null">
+        #{interestlanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="interestsubject != null">
+        #{interestsubject,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null">
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="postalcode != null">
+        #{postalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="qqnumber != null">
+        #{qqnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null">
+        #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="sepecilskill != null">
+        #{sepecilskill,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="deparmentpoLessonid != null">
+        #{deparmentpoLessonid,jdbcType=INTEGER},
+      </if>
+      <if test="fkEsaId != null">
+        #{fkEsaId,jdbcType=INTEGER},
+      </if>
+      <if test="regionpoLessonid != null">
+        #{regionpoLessonid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="photo != null">
+        #{photo,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="selfintroduction != null">
+        #{selfintroduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="teachingexperience != null">
+        #{teachingexperience,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="teachingrecords != null">
+        #{teachingrecords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="workspace != null">
+        #{workspace,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="main.java.cn.nanphonfy.mybatis.generator.entity.TMemberExample" resultType="java.lang.Long">
+    select count(*) from t_member
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_member
+    <set>
+      <if test="record.memberid != null">
+        memberId = #{record.memberid,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountno != null">
+        accountNo = #{record.accountno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountsetupdate != null">
+        accountSetupDate = #{record.accountsetupdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthdate != null">
+        birthdate = #{record.birthdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checked != null">
+        checked = #{record.checked,jdbcType=INTEGER},
+      </if>
+      <if test="record.degree != null">
+        degree = #{record.degree,jdbcType=INTEGER},
+      </if>
+      <if test="record.emailaddress != null">
+        emailAddress = #{record.emailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergencycontact != null">
+        emergencyContact = #{record.emergencycontact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emudepartment != null">
+        emuDepartment = #{record.emudepartment,jdbcType=INTEGER},
+      </if>
+      <if test="record.englishname != null">
+        englishName = #{record.englishname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.hobby != null">
+        hobby = #{record.hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interestlanguage != null">
+        interestLanguage = #{record.interestlanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interestsubject != null">
+        interestSubject = #{record.interestsubject,jdbcType=VARCHAR},
+      </if>
+      <if test="record.job != null">
+        job = #{record.job,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major != null">
+        major = #{record.major,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postalcode != null">
+        postalCode = #{record.postalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqnumber != null">
+        qqNumber = #{record.qqnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rank != null">
+        rank = #{record.rank,jdbcType=INTEGER},
+      </if>
+      <if test="record.school != null">
+        school = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sepecilskill != null">
+        sepecilSkill = #{record.sepecilskill,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.deparmentpoLessonid != null">
+        deparmentPO_lessonID = #{record.deparmentpoLessonid,jdbcType=INTEGER},
+      </if>
+      <if test="record.fkEsaId != null">
+        fk_esa_id = #{record.fkEsaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionpoLessonid != null">
+        regionPO_lessonID = #{record.regionpoLessonid,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        TYPE = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.photo != null">
+        photo = #{record.photo,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="record.selfintroduction != null">
+        selfIntroduction = #{record.selfintroduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.teachingexperience != null">
+        teachingExperience = #{record.teachingexperience,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.teachingrecords != null">
+        teachingRecords = #{record.teachingrecords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.workspace != null">
+        workspace = #{record.workspace,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_member
+    set memberId = #{record.memberid,jdbcType=INTEGER},
+      accountNo = #{record.accountno,jdbcType=VARCHAR},
+      accountSetupDate = #{record.accountsetupdate,jdbcType=TIMESTAMP},
+      area = #{record.area,jdbcType=VARCHAR},
+      birthdate = #{record.birthdate,jdbcType=TIMESTAMP},
+      checked = #{record.checked,jdbcType=INTEGER},
+      degree = #{record.degree,jdbcType=INTEGER},
+      emailAddress = #{record.emailaddress,jdbcType=VARCHAR},
+      emergencyContact = #{record.emergencycontact,jdbcType=VARCHAR},
+      emuDepartment = #{record.emudepartment,jdbcType=INTEGER},
+      englishName = #{record.englishname,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=INTEGER},
+      hobby = #{record.hobby,jdbcType=VARCHAR},
+      interestLanguage = #{record.interestlanguage,jdbcType=VARCHAR},
+      interestSubject = #{record.interestsubject,jdbcType=VARCHAR},
+      job = #{record.job,jdbcType=VARCHAR},
+      major = #{record.major,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      postalCode = #{record.postalcode,jdbcType=VARCHAR},
+      qqNumber = #{record.qqnumber,jdbcType=VARCHAR},
+      rank = #{record.rank,jdbcType=INTEGER},
+      school = #{record.school,jdbcType=VARCHAR},
+      sepecilSkill = #{record.sepecilskill,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      deparmentPO_lessonID = #{record.deparmentpoLessonid,jdbcType=INTEGER},
+      fk_esa_id = #{record.fkEsaId,jdbcType=INTEGER},
+      regionPO_lessonID = #{record.regionpoLessonid,jdbcType=INTEGER},
+      TYPE = #{record.type,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=LONGVARCHAR},
+      photo = #{record.photo,jdbcType=LONGVARBINARY},
+      selfIntroduction = #{record.selfintroduction,jdbcType=LONGVARCHAR},
+      teachingExperience = #{record.teachingexperience,jdbcType=LONGVARCHAR},
+      teachingRecords = #{record.teachingrecords,jdbcType=LONGVARCHAR},
+      workspace = #{record.workspace,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_member
+    set memberId = #{record.memberid,jdbcType=INTEGER},
+      accountNo = #{record.accountno,jdbcType=VARCHAR},
+      accountSetupDate = #{record.accountsetupdate,jdbcType=TIMESTAMP},
+      area = #{record.area,jdbcType=VARCHAR},
+      birthdate = #{record.birthdate,jdbcType=TIMESTAMP},
+      checked = #{record.checked,jdbcType=INTEGER},
+      degree = #{record.degree,jdbcType=INTEGER},
+      emailAddress = #{record.emailaddress,jdbcType=VARCHAR},
+      emergencyContact = #{record.emergencycontact,jdbcType=VARCHAR},
+      emuDepartment = #{record.emudepartment,jdbcType=INTEGER},
+      englishName = #{record.englishname,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=INTEGER},
+      hobby = #{record.hobby,jdbcType=VARCHAR},
+      interestLanguage = #{record.interestlanguage,jdbcType=VARCHAR},
+      interestSubject = #{record.interestsubject,jdbcType=VARCHAR},
+      job = #{record.job,jdbcType=VARCHAR},
+      major = #{record.major,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      postalCode = #{record.postalcode,jdbcType=VARCHAR},
+      qqNumber = #{record.qqnumber,jdbcType=VARCHAR},
+      rank = #{record.rank,jdbcType=INTEGER},
+      school = #{record.school,jdbcType=VARCHAR},
+      sepecilSkill = #{record.sepecilskill,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      deparmentPO_lessonID = #{record.deparmentpoLessonid,jdbcType=INTEGER},
+      fk_esa_id = #{record.fkEsaId,jdbcType=INTEGER},
+      regionPO_lessonID = #{record.regionpoLessonid,jdbcType=INTEGER},
+      TYPE = #{record.type,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="main.java.cn.nanphonfy.mybatis.generator.entity.TMemberWithBLOBs">
+    update t_member
+    <set>
+      <if test="accountno != null">
+        accountNo = #{accountno,jdbcType=VARCHAR},
+      </if>
+      <if test="accountsetupdate != null">
+        accountSetupDate = #{accountsetupdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null">
+        birthdate = #{birthdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checked != null">
+        checked = #{checked,jdbcType=INTEGER},
+      </if>
+      <if test="degree != null">
+        degree = #{degree,jdbcType=INTEGER},
+      </if>
+      <if test="emailaddress != null">
+        emailAddress = #{emailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencycontact != null">
+        emergencyContact = #{emergencycontact,jdbcType=VARCHAR},
+      </if>
+      <if test="emudepartment != null">
+        emuDepartment = #{emudepartment,jdbcType=INTEGER},
+      </if>
+      <if test="englishname != null">
+        englishName = #{englishname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="hobby != null">
+        hobby = #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="interestlanguage != null">
+        interestLanguage = #{interestlanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="interestsubject != null">
+        interestSubject = #{interestsubject,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null">
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="postalcode != null">
+        postalCode = #{postalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="qqnumber != null">
+        qqNumber = #{qqnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null">
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="school != null">
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="sepecilskill != null">
+        sepecilSkill = #{sepecilskill,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="deparmentpoLessonid != null">
+        deparmentPO_lessonID = #{deparmentpoLessonid,jdbcType=INTEGER},
+      </if>
+      <if test="fkEsaId != null">
+        fk_esa_id = #{fkEsaId,jdbcType=INTEGER},
+      </if>
+      <if test="regionpoLessonid != null">
+        regionPO_lessonID = #{regionpoLessonid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="photo != null">
+        photo = #{photo,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="selfintroduction != null">
+        selfIntroduction = #{selfintroduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="teachingexperience != null">
+        teachingExperience = #{teachingexperience,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="teachingrecords != null">
+        teachingRecords = #{teachingrecords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="workspace != null">
+        workspace = #{workspace,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where memberId = #{memberid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="main.java.cn.nanphonfy.mybatis.generator.entity.TMemberWithBLOBs">
+    update t_member
+    set accountNo = #{accountno,jdbcType=VARCHAR},
+      accountSetupDate = #{accountsetupdate,jdbcType=TIMESTAMP},
+      area = #{area,jdbcType=VARCHAR},
+      birthdate = #{birthdate,jdbcType=TIMESTAMP},
+      checked = #{checked,jdbcType=INTEGER},
+      degree = #{degree,jdbcType=INTEGER},
+      emailAddress = #{emailaddress,jdbcType=VARCHAR},
+      emergencyContact = #{emergencycontact,jdbcType=VARCHAR},
+      emuDepartment = #{emudepartment,jdbcType=INTEGER},
+      englishName = #{englishname,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      hobby = #{hobby,jdbcType=VARCHAR},
+      interestLanguage = #{interestlanguage,jdbcType=VARCHAR},
+      interestSubject = #{interestsubject,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      postalCode = #{postalcode,jdbcType=VARCHAR},
+      qqNumber = #{qqnumber,jdbcType=VARCHAR},
+      rank = #{rank,jdbcType=INTEGER},
+      school = #{school,jdbcType=VARCHAR},
+      sepecilSkill = #{sepecilskill,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      deparmentPO_lessonID = #{deparmentpoLessonid,jdbcType=INTEGER},
+      fk_esa_id = #{fkEsaId,jdbcType=INTEGER},
+      regionPO_lessonID = #{regionpoLessonid,jdbcType=INTEGER},
+      TYPE = #{type,jdbcType=INTEGER},
+      address = #{address,jdbcType=LONGVARCHAR},
+      photo = #{photo,jdbcType=LONGVARBINARY},
+      selfIntroduction = #{selfintroduction,jdbcType=LONGVARCHAR},
+      teachingExperience = #{teachingexperience,jdbcType=LONGVARCHAR},
+      teachingRecords = #{teachingrecords,jdbcType=LONGVARCHAR},
+      workspace = #{workspace,jdbcType=LONGVARCHAR}
+    where memberId = #{memberid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="main.java.cn.nanphonfy.mybatis.generator.entity.TMember">
+    update t_member
+    set accountNo = #{accountno,jdbcType=VARCHAR},
+      accountSetupDate = #{accountsetupdate,jdbcType=TIMESTAMP},
+      area = #{area,jdbcType=VARCHAR},
+      birthdate = #{birthdate,jdbcType=TIMESTAMP},
+      checked = #{checked,jdbcType=INTEGER},
+      degree = #{degree,jdbcType=INTEGER},
+      emailAddress = #{emailaddress,jdbcType=VARCHAR},
+      emergencyContact = #{emergencycontact,jdbcType=VARCHAR},
+      emuDepartment = #{emudepartment,jdbcType=INTEGER},
+      englishName = #{englishname,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      hobby = #{hobby,jdbcType=VARCHAR},
+      interestLanguage = #{interestlanguage,jdbcType=VARCHAR},
+      interestSubject = #{interestsubject,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      postalCode = #{postalcode,jdbcType=VARCHAR},
+      qqNumber = #{qqnumber,jdbcType=VARCHAR},
+      rank = #{rank,jdbcType=INTEGER},
+      school = #{school,jdbcType=VARCHAR},
+      sepecilSkill = #{sepecilskill,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      deparmentPO_lessonID = #{deparmentpoLessonid,jdbcType=INTEGER},
+      fk_esa_id = #{fkEsaId,jdbcType=INTEGER},
+      regionPO_lessonID = #{regionpoLessonid,jdbcType=INTEGER},
+      TYPE = #{type,jdbcType=INTEGER}
+    where memberId = #{memberid,jdbcType=INTEGER}
+  </update>
+</mapper>
