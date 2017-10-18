@@ -1,5 +1,3 @@
-代码：https://www.manning.com/books/spring-boot-in-action
-
 >spring开启某些特性(eg.事务管理和Spring MVC)、启用第三方库(eg.基于Thymeleaf的Web视图)、启用配置Servlet和过滤器（eg.Spring的 DispatcherServlet->web.xml或Servlet初始化代码里),都需要XML或Java显式配置。
 
 >组件扫描减少了配置量，但还是需要不少配置。写配置挤占了写程序逻辑的时间。此外，项目管理依赖要知道这些库的哪个版本和其他库不会有冲突，一旦选错了依赖版本，会造成不兼容问题。
@@ -40,5 +38,5 @@ class HelloController {
 ### 1.3 澄清
 >spring boot不是应用服务器（是内嵌的servlet容器提供），没有实现JPA或JMS规范（是配置了某JPA实现），没引入代码生成（用了spring4的条件化配置+传递依赖解析（maven+gradle））。本质上，spring boot就是spring。
 
-
+代码：https://www.manning.com/books/spring-boot-in-action
 
