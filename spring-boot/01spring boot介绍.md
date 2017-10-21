@@ -50,3 +50,6 @@ class HelloController {
 - Web界面  
 >http://start.spring.io，Initializr创建的项目，提供了构建Spring Boot应用程序所需的基本内容：①build.gradle，构建说明文件，也可换成pom.xml；②Application.java，引导启动应用程序；③ApplicationTests.java，空的JUnit测试类，加载了Spring应用程序上下文；④application.properties，一个空的properties文件，可按需添加配置属性。
 
+- 使用intelliJ IDEA创建
+>`New > Project>Spring Initializr>`
+
