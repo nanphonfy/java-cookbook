@@ -1,4 +1,3 @@
-
 - 配置spring boot骨架的网址
 http://start.spring.io/
 
@@ -15,5 +14,223 @@ java -jar build/libs/initializr-start-0.0.1-SNAPSHOT.jar
 https://jingyan.baidu.com/article/4d58d541167bc69dd4e9c009.html
 
 
+### 1.1 构建脚本：build.gradle
+```
+// buildscript 代码块中脚本优先执行
+buildscript {
+
+	// ext 用于定义动态属
+	ext {
+		springBootVersion = '1.4.3.RELEASE'
+	}
+	
+	// 使用了 Maven 的中央仓库（你也可以指定其他仓库）
+	repositories {
+		mavenCentral()
+	}
+	
+	// 依赖关系
+	dependencies {
+		// classpath 声明说明了在执行其余的脚本时，ClassLoader 可以使用这些依赖项
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+// 使用插件
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+// 打包的类型为 jar，并指定了生成的打包的文件名称和版本
+jar {
+	baseName = 'initializr-start'
+	version = '0.0.1-SNAPSHOT'
+}
+
+// 指定编译 .java 文件的 JDK 版本
+sourceCompatibility = 1.8
+
+// 使用了 Maven 的中央仓库
+repositories {
+	mavenCentral()
+}
+
+// 依赖关系
+dependencies {
+	// 该依赖对于编译发行是必须的
+	compile('org.springframework.boot:spring-boot-starter-web')
+	// 该依赖对于编译测试是必须的，默认包含编译产品依赖和编译时依
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+```
+>-Gradle 3 User Guide 中文翻译《Gradle 3 用户指南》
+https://github.com/waylau/Gradle-3-User-Guide
+
+- 自定义存储库，加速构建，eg.添加阿里云的中央仓库
+```
+// 默认使用了 Maven的中央仓库。这里改用自定义的镜像库
+repositories {
+	//mavenCentral()
+	maven {
+		url 'http://maven.aliyun.com/nexus/content/groups/public/'
+	}
+}
+```
+
+- 三种运行方式：
+>①java -jar；  
+②java application；  
+③spring boot gradle plugin插件（gradle bootRun）
+
+- 对controller进行单元测试
+```
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+public class HelloControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+	
+    @Test
+    public void testHello() throws Exception {
+    	mockMvc.perform(MockMvcRequestBuilders.get("/hello").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("Hello World! Welcome to visit waylau.com!")));
+    }
+}
+```
+
+## 2. 理解Thymeleaf
+>- java模板引擎。能够处理HTML、XML、JavaScript、CSS、纯文本。类似JSP、freemarker
+>- 自然模板。原型即页面
+>- 语法优雅易懂。OGNL、SpringEL
+>- 遵从web标准，支持HTML5
+
+- 论技术选型的重要性，JSP还是Thymeleaf？
+https://www.imooc.com/article/20304
+
+- Thymeleay与spring boot集成
+```
+// 添加 Thymeleaf 的依赖
+compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+```
+
+## 3. Spring Data JPA 
+>- JPA:用于管理java EE和java SE环境中的持久化，以及对象/关系映射的java api。
+>- 实现：hibernate、eclipseLink、Apache openJPA
+
+- JPA核心概念
+>- 实体：
+>>①实体表示数据库表；  
+②每个实体实例->表中的行；  
+③必须用javax.persistence.Entity注解；  
+④必须有一个public或protected无参构造；  
+⑤实体实例被当做值以分离对象传递时（eg.会话bean的远程业务接口），必须实现Serializable接口；  
+⑥唯一的对象标识符。
+>- 关系：
+>>一对一、一对多、多对一、多对多
+>- EntityManager接口
+>>①定义持久性上下文交互方法；  
+②增删持久实体实例，通过主键查找；  
+③允许在实体上运行查询。
+
+- Spring Data JPA 
+>①是更大的spring Data家族的一部分；  
+②对基于JPA的数据访问层的增强支持；  
+③更容易构建基于使用spring数据访问技术栈的应用程序；
+
+- 常用接口
+>CrudRepository  
+PagingAndSortingRepository  
+根据方法名创建查询
+
+- Spring Boot 集成,集成过程测试
+```
+配置环境
+// 自定义  Hibernate 的版本
+ext['hibernate.version'] = '5.2.8.Final'
+
+// 添加 Spring Data JPA 的依赖
+compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	
+// 添加 MySQL连接驱动 的依赖
+compile('mysql:mysql-connector-java:6.0.5')
+```
+
+- 数据持久化
+修改application.properties
+```
+# DataSource 
+spring.datasource.url=jdbc:mysql://localhost/blog?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC 
+spring.datasource.username=root
+spring.datasource.password=ZNF123
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA
+spring.jpa.show-sql = true
+spring.jpa.hibernate.ddl-auto=create-drop
+```
+后台编码
+
+## 4. ElasticSearch
+>- 高度可扩展的开源全文搜索和分析引擎；
+>- 快速地、近实时地对大数据进行存储、搜索和分析；
+>- 用来支撑有复杂的数据搜索需求的企业级应用。
+
+- 特点：
+>分布式、高可用、多类型、多API、面向文档、异步写入、近实时、基于Lucene、Apache协议
+
+- 核心概念：
+>近实时（轻微延时，1s左右，每隔n秒做刷新）  
+集群（多个节点集合，保存应用所有数据，提供集成所有节点索引和搜索功能）  
+节点（名称一般用UUID）  
+索引（相似文档的结合）  
+类型（根据文档公共属性划分）  
+文档（进行索引的基本单位，使用json格式）  
+分片（允许索引分片，建立多个副本，水平分割缩放，并行，提高性能和吞吐量）  
+副本（故障不可避免，要分布到不同节点，也可以提升吞吐量和搜索量）  
+
+- Elasticsearch 实-文档、资源库
+```
+// 添加  Spring Data Elasticsearch 的依赖
+compile('org.springframework.boot:spring-boot-starter-data-elasticsearch')
+
+// 添加  JNA 的依赖
+compile('net.java.dev.jna:jna:4.3.0')
+```
+
+- 全文搜索概述
+>- 数据结构
+>>结构化：固定格式或有限长度，eg.数据库、元数据等；  
+非结构化：不定长或无固定格式，eg.邮件、word文档。
+
+- 非结构化数据检索：
+>顺序扫描法（eg.Linux扫描文件内容），全文搜索（将非结构转为结构化数据，再建立索引）
+
+- 全文搜索概念：  
+>将文件中所有文本与搜索项匹配的文字资料检索的方法
+
+- 全文搜索实现原理：
+>建文本库->建立索引->执行搜索->过滤结果（eg.分页）
+
+- 基于java的开源实现
+> Lucene（发动机）、ElasticSearch（有它自己的管理系统，只支持json，提供restful）、Solr（利用zookeeper，实时性更低，但支持的数据更多）
+
+实战：
+```
+# 内嵌 Elasticsearch 实例。默认存储位置是工作目录的 elastic 目录
+spring.data.elasticsearch.properties.path.home=target/elastic
+# 设置连接超时时间
+spring.data.elasticsearch.properties.transport.tcp.connect_timeout=120s
+```
+
+**启动：** `elasticsearch-6.1.1\bin\elasticsearch.bat`  
+**数据存储：** `elasticsearch-6.1.1\data`
 
 
+开源项目示例：
+- spring boot要如何学习？
+https://www.zhihu.com/question/53729800
+https://gitee.com/shuzheng/zheng
+https://gitee.com/YYDeament/88ybg
