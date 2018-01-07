@@ -228,6 +228,63 @@ spring.data.elasticsearch.properties.transport.tcp.connect_timeout=120s
 **启动：** `elasticsearch-6.1.1\bin\elasticsearch.bat`  
 **数据存储：** `elasticsearch-6.1.1\data`
 
+## 5. 架构  
+三层架构 VS. MVC  
+>三层架构不等于MVC  
+请求&响应->表示层（控制层&视图）->业务层（模型）->数据访问层（DAO）->数据库
+
+>博客系统->关系型数据库&elasticsearch
+>文件管理系统->MongoDB
+>>两个系统通过restful api进行交互
+
+## 6. bootstrap
+>- 基于HTML、CSS、JavaScript
+>- 响应式布局
+>- 移动设备优先
+
+- 移动设备优先策略
+>基础的CSS是移动优先
+>媒体查询（针对平板，台式机）
+>渐进增强（随屏幕调节元素）
+
+>**响应式：** viewport尺寸，系统自动分为最多12列
+
+- 需求分析  
+核心功能：
+>博客系统（用户管理、安全设置、博客管理、评论管理、点赞管理、分类管理、标签管理、首页搜索）
+
+- 首页搜索  
+>全文检索、最新、最热、标签、用户、文章
+
+## 7. spring security
+>核心领域概念
+>- 认证：认证是建立主体（可在程序中执行操作的用户、设备或其他系统）的过程；
+>- 授权：访问控制，决定是否允许其在程序中执行操作
+
+- 身份验证技术
+>HTTP BASIC、HTTP Digest、HTTP X.509、LDAP、基于表单认证、OpenID、单点登录、Remember-Me、匿名身份验证、Run-as、JAAS、java ee容器认证。
+
+- 模块
+>Core、Remoting、Web、Config、LDAP、ACL、CAS、OpenID、Test
+
+- spring security与spring boot集成
+```
+// 添加  Spring Security 依赖
+compile('org.springframework.boot:spring-boot-starter-security')
+```
+基于角色的权限管理
+
+- 角色：  
+>①代表一系列行为或责任的实体；  
+②限定能做什么、不能做什么；  
+③用户账号往往与角色关联。
+
+- RBAC:
+>基于角色的访问控制（role-based access control）、隐式访问控制、显示访问控制
+
+- 解决方案:
+>Apache Shiro、Spring security
+
 
 开源项目示例：
 - spring boot要如何学习？
