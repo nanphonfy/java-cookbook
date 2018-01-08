@@ -285,6 +285,36 @@ compile('org.springframework.boot:spring-boot-starter-security')
 - 解决方案:
 >Apache Shiro、Spring security
 
+- 角色管理的需求
+角色授权、权限设置
+```
+// 添加  Spring Security 依赖
+compile('org.springframework.boot:spring-boot-starter-security')
+```
+
+- 权限管理
+角色授权、权限设置
+
+功能：
+>建立角色与资源的关系、CSRF问题的解决、启用方法级别的安全设置、使用BCrypt加密密码、用户登录、记住我
+>>CSRF（Cross-site request forgery）:跨站请求伪造
+
+>像put、delete操作都得在ajax处理CSRF的token，在发送请求前，将其填入。
+
+- 博客管理  
+（发表、编辑、删除、分类、设置标签、上传图片、模糊查询、、最新最热排序、阅读量统计）
+
+- 评论管理  
+发表、删除评论、评论量统计
+
+- 点赞管理  
+点赞、取消、统计
+
+- 分类管理（个人）  
+创建、删除、查询
+
+- 标签管理（公有）  
+增删查
 
 开源项目示例：
 - spring boot要如何学习？
