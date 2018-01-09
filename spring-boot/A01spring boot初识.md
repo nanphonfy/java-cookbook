@@ -316,6 +316,123 @@ compile('org.springframework.boot:spring-boot-starter-security')
 - 标签管理（公有）  
 增删查
 
+## 8 api设计
+### 8.1 用户管理
+
+++f：false、t：true++
+- @PreAuthorize("hasAuthority('ROLE_ADMIN')")  
+>- 查看所有用户：GET /users
+
+参数 | 是否必须|默认值
+---|---|---
+async| f| -
+pageIndex| f| 0
+pageSize| f| 10
+name| f| ""
+>- 创建和修改用户：POST /users  
+
+参数 | 是否必须|默认值|备注
+---|---|---|---
+User对象|t|-|含用户所有属性
+authorityId|t|-|后台根据它得到角色权限
+>- 删除用户：DELETE /users/{id}
+
+参数 | 是否必须|默认值|备注
+---|---|---|---
+id|t|-|用户id（@PathVariable）
+
+## 8.2 个人用户
+@PreAuthorize("authentication.name.equals(#username)") 
+>-查看个人主页：GET u/{username}/profile
+
+参数 |备注
+---|---
+username| @PathVariable
+
+@PreAuthorize("authentication.name.equals(#username)") 
+>- 保存个人设置：POST u/{username}/profile
+
+参数 |备注
+---|---
+username| @PathVariable
+
+@PreAuthorize("authentication.name.equals(#username)") 
+>- 保存头像：POST u/{username}/avatar
+
+参数 |备注
+---|---
+username | @PathVariable
+User |@RequestBody
+
+>- 查看用户博客（排序）：GET u/{username}/blogs
+
+参数 | 是否必须|默认值|备注
+---|---|---|---
+username| t |- |@PathVariable
+order| f| new| @RequestParam
+catalog| f| - |@RequestParam
+keyword| f| "" |@RequestParam
+async| f| - |@RequestParam
+pageIndex| f| 0 |@RequestParam
+pageSize| t| 10 |@RequestParam
+
+>- 获取博客展示界面:GET u/{username}/blogs/{id}
+
+参数 |备注
+---|---
+username | @PathVariable
+id| @PathVariable
+
+@PreAuthorize("authentication.name.equals(#username)") 
+>- 删除博客： u/{username}/blogs/{id}
+
+参数 |备注
+---|---
+username | @PathVariable
+id| @PathVariable
+
+@PreAuthorize("authentication.name.equals(#username)") 
+>- 编辑博客： u/{username}/blogs/edit/{id}
+
+参数 |备注
+---|---
+username | @PathVariable
+id| @PathVariable
+
+@PreAuthorize("authentication.name.equals(#username)") 
+>- 保存博客： u/{username}/blogs/edit
+
+参数 |备注
+---|---
+username| @PathVariable
+Blog| @RequestBody
+
+@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_USER')") 
+>- 发表点赞：POST votes
+
+参数 |备注
+---|---
+blogId|-
+
+@PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_USER')")
+>- 删除点赞：DELETE votes/{id}
+
+参数 |备注
+---|---
+blogId|-
+id| @PathVariable
+
+
+全局：
+>- 首页博客:GET /blogs
+参数 | 是否必须|默认值
+---|---|---
+order| f| "new"
+keyword| f| ""
+async| f| -
+pageIndex| f| 0
+pageSize| f| 10
+
 开源项目示例：
 - spring boot要如何学习？
 https://www.zhihu.com/question/53729800
