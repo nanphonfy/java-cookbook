@@ -22,8 +22,13 @@ public class ReportController extends AbstractController {
     @Autowired
     private ReportService reportService;
 
-    //https://www.cnblogs.com/shimh/p/6094410.html
-    //localhost:8997/ebase-server/excels/upload
+    /**
+     * https://www.cnblogs.com/shimh/p/6094410.html
+     * localhost:8997/ebase-server/excels/upload
+     *
+     * @param file
+     * @return
+     */
     @RequestMapping(value = "upload", method = RequestMethod.POST)
     public String importExcel(@RequestParam(value="filename") MultipartFile file) {
         //上传、解析、导入
@@ -34,7 +39,9 @@ public class ReportController extends AbstractController {
         return FastJsonUtil.error("录入失败");
     }
 
-    //localhost:8997/ebase-server/excels/download
+    /**
+     * localhost:8997/ebase-server/excels/download
+     */
     @RequestMapping(value = "download")
     public ResponseEntity<byte[]> downloadTemplateExcel() {
         return reportService.downloadTemplateExcel();

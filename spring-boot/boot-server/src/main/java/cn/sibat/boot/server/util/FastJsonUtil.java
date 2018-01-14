@@ -19,21 +19,15 @@ public class FastJsonUtil {
     }
 
     public static String error(String msg) {
-        JSONObject obj = new JSONObject();
-        obj.put("status", 500);
-        obj.put("seq", "");
-        obj.put("msg", msg);
-        obj.put("time", DateUtil.parseDateToString(new Date(), DateUtil.PATTERN_yyyy_MM_dd_HHmmss));
-        return obj.toString();
+        return getResponse(500, msg, "").toString();
+    }
+
+    public static String notData(String msg) {
+        return getResponse(404, msg, "").toString();
     }
 
     public static String ok() {
-        JSONObject obj = new JSONObject();
-        obj.put("status", 200);
-        obj.put("seq", "");
-        obj.put("msg", "");
-        obj.put("time", DateUtil.parseDateToString(new Date(), DateUtil.PATTERN_yyyy_MM_dd_HHmmss));
-        return obj.toString();
+        return getResponse(200, "ok", "").toString();
     }
 
     /**
@@ -59,6 +53,10 @@ public class FastJsonUtil {
             }
         }
         return obj.toString();
+    }
+
+    public static String getOkDataResponse(Object data) {
+        return getDataResponse(data,200,"ok","");
     }
 
     /**
